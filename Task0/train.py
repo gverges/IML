@@ -32,7 +32,7 @@ input_shape = (1, X_train.shape[1], 1)
 model, criterion, optimizer = create_cnn_regression_model(input_shape)
 
 # Check if a saved model exists and load it
-model_path = './best_model.pt'
+model_path = 'best_model.pt'
 best_val_loss = float('inf')
 if os.path.exists(model_path):
     model.load_state_dict(torch.load(model_path))
