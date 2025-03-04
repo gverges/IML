@@ -6,7 +6,7 @@ from torch.utils.data import DataLoader, TensorDataset
 import os
 
 # Load the dataset
-data = pd.read_csv('./train.csv')
+data = pd.read_csv('train.csv')
 
 # Prepare the data
 X = data.drop(columns=['Id', 'y']).values
