@@ -33,13 +33,23 @@ model, criterion, optimizer = create_cnn_regression_model(input_shape)
 
 # Check if a saved model exists and load it
 model_path = './best_model.pt'
+best_val_loss = float('inf')
 if os.path.exists(model_path):
     model.load_state_dict(torch.load(model_path))
     print("Loaded saved model.")
+    model.eval()
+    val_loss = 0
+    with torch.no_grad():
+        for X_batch, y_batch in val_loader:
+            X_batch = X_batch.unsqueeze(1)  # Add this line to ensure the correct shape
+            outputs = model(X_batch)
+            loss = criterion(outputs, y_batch)
+            val_loss += loss.item()
+    val_loss /= len(val_loader)
+    best_val_loss = val_loss
 
 # Training loop
 num_epochs = 100
-best_val_loss = float('inf')
 for epoch in range(num_epochs):
     model.train()
     for X_batch, y_batch in train_loader:

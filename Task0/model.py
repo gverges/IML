@@ -22,6 +22,6 @@ class CNNRegressionModel(nn.Module):
 
 def create_cnn_regression_model(input_shape):
     model = CNNRegressionModel(input_shape)
-    criterion = nn.MSELoss()
+    criterion = lambda output, target: torch.sqrt(nn.MSELoss()(output, target))
     optimizer = optim.Adam(model.parameters(), lr=0.001)
     return model, criterion, optimizer
